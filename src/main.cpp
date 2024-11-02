@@ -20,7 +20,6 @@ void start_app() {
 	App *app = new App;
 	app->init(WIN_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, FPS, FULLSCREEN);
 	bool success = app->isRunning(); 
-
 	while (app->isRunning()) {
 		app->handleEvents();
 		app->update();
