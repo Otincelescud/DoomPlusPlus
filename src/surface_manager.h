@@ -1,4 +1,4 @@
-#include "app.hpp"
+#include "app.h"
 
 #ifndef SurfaceManager_h
 #define SurfaceManager_h

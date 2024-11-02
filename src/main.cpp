@@ -8,7 +8,7 @@
 
 #endif
 
-#include "app.hpp"
+#include "app.h"
 
 #define WIDTH 960
 #define HEIGHT 540

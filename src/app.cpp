@@ -1,4 +1,4 @@
-#include "app.hpp"
+#include "app.h"
 
 App::App() {}
 App::~App() {}
@@ -55,23 +55,17 @@ void App::init(const char *title, int xpos, int ypos, unsigned int w, unsigned i
 		return;
 	}
 
-	// Create renderer
-	
-	// Doom didn't need hardware acceleration so neither do I
-	renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_SOFTWARE);
-	if (!renderer) {
-		SDL_Log("Can't create renderer: %s", SDL_GetError());
+	screenSurface = SDL_GetWindowSurface(win);
+	if (!screenSurface) {
+		SDL_Log("Can't get window surface");
 		SDL_DestroyWindow(win);
 		IMG_Quit();
 		SDL_Quit();
-		return;
 	}
 
-	SDL_SetRenderDrawColor(renderer, 127, 30, 127, 255);
 	fps = window_fps;
 	frame_num = 1;
 	running = true;
-
 }
 
 bool App::isRunning() { return running; }
@@ -92,21 +86,19 @@ void App::handleEvents() {
 
 void App::update() {}
 void App::render() {
-	SDL_RenderClear(renderer);
 
-	// Render Stuff
-	//
 	frame_time = SDL_GetTicks() - frame_start;
 	if (!(frame_time*fps >= 1000 || frame_num == 1)) SDL_Delay(1000.0 / fps - frame_time);
 
-	SDL_RenderPresent(renderer);
+	// Render Stuff
+
+	SDL_UpdateWindowSurface(win);
 
 	frame_start = SDL_GetTicks();
 	frame_num++;
 }
 
 void App::clean() {
-	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(win);
 	IMG_Quit();
 	SDL_Quit();
